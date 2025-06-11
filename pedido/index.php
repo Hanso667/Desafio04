@@ -44,7 +44,7 @@
                 $Pedido->setCliente($_POST['Cliente']);
 
                 
-                $Aluno->toHtml();
+                $Pedido->toHtml();
             }
             ?>
 

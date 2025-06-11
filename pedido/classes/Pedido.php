@@ -33,9 +33,7 @@ class Pedido
         if ($preco > 0) {
             $this->preco = $preco;
         } else {
-            echo "<script>";
-            echo `alert("Preço tem um valor invalido")`;
-            echo "</script>";
+            "<script>alert('Preço tem um valor invalido');</script>";
         }
     }
 
@@ -46,11 +44,10 @@ class Pedido
 
     public function setCliente($cliente)
     {
-        if ($cliente == "normal" && $cliente == "premium") {
+        if ($cliente == "normal" || $cliente == "premium") {
+            $this->cliente = $cliente;
         } else {
-            echo "<script>";
-            echo `alert("Cliente tem um valor invalido")`;
-            echo "</script>";
+            "<script>alert('Preço tem um valor invalido');</script>";
         }
     }
 
@@ -67,30 +64,29 @@ class Pedido
 
     public function getDesconto($tipo)
     {
-        if($this->getCliente() == "premium"){
+        if ($this->getCliente() == "premium") {
             $porcento = 10;
-        }else{
+        } else {
             $porcento = 5;
         }
-            if($tipo == "%"){
-                return `$porcento . %`;
-            } else if ($tipo == "R$"){
-                return (float)$this->getTotalBruto()/100*$porcento;
-            }
-        
+        if ($tipo == "%") {
+            return $porcento . "%";
+        } else if ($tipo == "R$") {
+            return (float)$this->getTotalBruto() / 100 * $porcento;
+        }
     }
 
-     public function getImposto($tipo)
+    public function getImposto($tipo)
     {
-            if($tipo == "%"){
-                return `8%`;
-            } else if ($tipo == "R$"){
-                return (float)$this->getTotalBruto()/100*8;
-            }
-        
+        if ($tipo == "%") {
+            return "8%";
+        } else if ($tipo == "R$") {
+            return (float)$this->getTotalBruto() / 100 * 8;
+        }
     }
 
-    public function getTotal(){
+    public function getTotal()
+    {
         return $this->getTotalBruto() - $this->getDesconto('R$') + $this->getImposto('R$');
     }
 
@@ -100,9 +96,9 @@ class Pedido
         echo "<h2> Quantidade: " . $this->getQuantidade() . "</h2>";
         echo "<h1> Total Bruto: " . $this->getTotalBruto() . "</h1>";
         echo "<h1> Desconto (%): " . $this->getDesconto("%") . "</h1>";
-        echo "<h1> Desconto (R$): " . $this->getDesconto("R%") . "</h1>";
+        echo "<h1> Desconto (R$): " . $this->getDesconto("R$") . "</h1>";
         echo "<h1> Imposto (%): " . $this->getImposto("%") . "</h1>";
-        echo "<h1> Desconto (R%): " . $this->getImposto("R%") . "</h1>";
+        echo "<h1> Desconto (R%): " . $this->getImposto("R$") . "</h1>";
         echo "<h1> Total: " . $this->getTotal() . "</h1>";
     }
 }
